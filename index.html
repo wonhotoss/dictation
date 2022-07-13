@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- <meta charset="utf-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">    
+    <script src="./desc.js"></script> -->
+</head>
+<body >      
+    <input type="file" id="myfile" name="myfile" onchange="file_selected(this.files)">  
+    <audio controls autoplay muted src="#" id="audio">
+        <!-- <source id="src" src="#" type="audio/mp3"> -->
+        <!-- <source src="horse.mp3" type="audio/mpeg"> -->
+      Your browser does not support the audio element.
+      </audio>
+    <textarea id='textarea' name="Text1" cols="40" rows="5">
+    </textarea>
+    <script>
+        let audio = document.body.querySelector("#audio");
+        let textarea = document.body.querySelector("#textarea");
+
+        function file_selected(file_list){
+            let file = file_list[0];
+            // let audio = document.body.querySelector("#audio");
+            audio.src = URL.createObjectURL(file);
+            // src.src = 
+
+        }
+
+        meta_last_pressed = 0
+
+        document.body.onkeydown = textarea.onkeydown = (e) => {
+            console.log(e);
+            // keyCode 91 == command
+            if (e.keyCode == 91) {
+                // return;
+                let now = (new Date()).getTime();
+                if(now - meta_last_pressed < 1000){
+                    meta_last_pressed = 0;
+                    // let audio = document.body.querySelector("#audio");
+                    if(audio.paused){
+                        audio.play();
+                    }
+                    else{
+                        audio.pause();
+                    }
+                }
+                else{
+                    meta_last_pressed = now;
+                }
+                e.stopPropagation();
+                e.preventDefault();
+            }
+            else if(e.keyCode == 37 && e.metaKey){
+                audio.currentTime = Math.max(0, audio.currentTime - 5);
+                e.stopPropagation();
+                e.preventDefault();
+            }
+        }
+
+        // auto-save
+        (async() => {
+            while(true){
+                await new Promise((resolve, reject) => {
+                    setTimeout(resolve, 5000);
+                });
+            }
+        })();
+    </script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>    
+
+    <div id="selector-root">
+    </div>
+        
+
+    <template id="selector">
+        <div class="input-group mb-3">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">$PLACEHOLDER$</button>
+            <ul id="list" class="dropdown-menu">                
+            </ul>
+            <input 
+                type="text" 
+                class="form-control" 
+                aria-label="Text input with dropdown button" 
+                onchange="edit('$PLACEHOLDER$', this.value)"
+            >
+        </div>
+    </template>
+
+    <template id="item">
+        <li><a class="dropdown-item" href="#">$PLACEHOLDER$</a></li>
+    </template>
+
+    <template id="divider">
+        <li><hr class="dropdown-divider"></li>                
+    </template> -->
+</body>
+</html>
